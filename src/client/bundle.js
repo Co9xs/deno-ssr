@@ -21181,13 +21181,20 @@ var exports4 = {
 })();
 const App = ()=>{
     const [count, setCount] = useState(0);
-    const onClick = ()=>{
+    const countUp = ()=>{
         setCount((currentCount)=>currentCount + 1
+        );
+    };
+    const countDown = ()=>{
+        setCount((currentCount)=>currentCount - 1
         );
     };
     return exports1.createElement("div", null, count, exports1.createElement("button", {
         type: "button",
-        onClick: onClick
-    }, "count up"));
+        onClick: countUp
+    }, "count up"), exports1.createElement("button", {
+        type: "button",
+        onClick: countDown
+    }, "count down"));
 };
 exports4.hydrate(exports1.createElement(App, null), document.getElementById("app"));
