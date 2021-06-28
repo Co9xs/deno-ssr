@@ -1,19 +1,13 @@
 import React, { useState, useEffect } from "https://jspm.dev/react@17.0.2";
 
-export function App() {
-  const [food, setFood] = useState(null);
+export function App({initialFood}) {
+  const [food, setFood] = useState(initialFood);
 
   const onClick = (name) => {
     fetch(`/api/${name}`)
       .then((res) => res.json())
       .then((data) => setFood(data));
   };
-
-  useEffect(() => {
-    fetch("/api/potato")
-      .then((res) => res.json())
-      .then((data) => setFood(data));
-  }, []);
 
   return (
     <div>

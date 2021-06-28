@@ -16,6 +16,7 @@ const js = await Deno.readFile(`.${BUNDLE_JS_FILE_URL}`);
 listenAndServe({ port: 8080 }, (req) => {
   switch (true) {
     case req.url === "/": {
+      const initialFood = DUMMY_DB.get("potato")
       req.respond({
         status: 200,
         headers: new Headers({
@@ -26,8 +27,13 @@ listenAndServe({ port: 8080 }, (req) => {
             <head></head>
             <body>
               <div id="app">
-                <App />
+                <App initialFood={initialFood}/>
               </div>
+              <script
+                id="initial-food"
+                type="text/plain"
+                data-json={JSON.stringify(initialFood)}
+              ></script>
               <script type="module" src={BUNDLE_JS_FILE_URL}></script>
             </body>
           </html>

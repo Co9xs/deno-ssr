@@ -1643,7 +1643,7 @@ var exports1 = {
     exports1.useState = useState;
     exports1.version = ReactVersion;
 })();
-const useEffect = exports1.useEffect, useState = exports1.useState;
+const useState = exports1.useState;
 var exports2 = {
 };
 (function() {
@@ -21179,18 +21179,13 @@ var exports4 = {
     exports4.unstable_renderSubtreeIntoContainer = renderSubtreeIntoContainer;
     exports4.version = ReactVersion;
 })();
-function App() {
-    const [food, setFood] = useState(null);
+function App({ initialFood  }) {
+    const [food, setFood] = useState(initialFood);
     const onClick = (name)=>{
         fetch(`/api/${name}`).then((res)=>res.json()
         ).then((data)=>setFood(data)
         );
     };
-    useEffect(()=>{
-        fetch("/api/potato").then((res)=>res.json()
-        ).then((data)=>setFood(data)
-        );
-    }, []);
     return exports1.createElement("div", null, food && exports1.createElement("p", null, "name: ", food.name, exports1.createElement("br", null), "like: ", food.like, exports1.createElement("br", null), "dislike: ", food.dislike), exports1.createElement("p", null, exports1.createElement("button", {
         type: "button",
         onClick: ()=>onClick("potato")
@@ -21202,4 +21197,7 @@ function App() {
         onClick: ()=>onClick("tomato")
     }, "tomato")));
 }
-exports4.hydrate(exports1.createElement(App, null), document.getElementById("app"));
+const initialFood = JSON.parse(document.getElementById("initial-food").getAttribute("data-json"));
+exports4.hydrate(exports1.createElement(App, {
+    initialFood: initialFood
+}), document.getElementById("app"));
