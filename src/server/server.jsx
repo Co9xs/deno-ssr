@@ -5,6 +5,11 @@ import ReactDOMServer from "https://jspm.dev/react-dom@17.0.2/server";
 import { App } from "../client/App.jsx";
 
 const BUNDLE_JS_FILE_URL = "/client/bundle.js";
+const DUMMY_DB = new Map([
+  ["potato", { name: "potato", like: 10, dislike: 0 }],
+  ["carrot", { name: "carrot", like: 6, dislike: 4 }],
+  ["tomato", { name: "tomato", like: 3, dislike: 7 }],
+]);
 
 const js = await Deno.readFile(`.${BUNDLE_JS_FILE_URL}`);
 
@@ -37,6 +42,16 @@ listenAndServe({ port: 8080 }, (req) => {
           "Content-Type": "text/javascript",
         }),
         body: js,
+      });
+      break;
+    }
+    case /^\/api\//.test(req.url): {
+      req.respond({
+        status: 200,
+        headers: new Headers({
+          "Content-Type": "application/json",
+        }),
+        body: JSON.stringify(DUMMY_DB.get(req.url.slice(5))),
       });
       break;
     }

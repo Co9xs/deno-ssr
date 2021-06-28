@@ -1,24 +1,42 @@
-import React,  { useState } from "https://jspm.dev/react@17.0.2"
-export const App = () => {
-  const [count, setCount] = useState(0)
+import React, { useState, useEffect } from "https://jspm.dev/react@17.0.2";
 
-  const countUp = () => {
-    setCount((currentCount) => currentCount + 1)
-  }
+export function App() {
+  const [food, setFood] = useState(null);
 
-  const countDown = () => {
-    setCount((currentCount) => currentCount - 1)
-  }
+  const onClick = (name) => {
+    fetch(`/api/${name}`)
+      .then((res) => res.json())
+      .then((data) => setFood(data));
+  };
+
+  useEffect(() => {
+    fetch("/api/potato")
+      .then((res) => res.json())
+      .then((data) => setFood(data));
+  }, []);
 
   return (
     <div>
-      {count}
-      <button type="button" onClick={countUp}>
-        count up
-      </button>
-      <button type="button" onClick={countDown}>
-        count down
-      </button>
+      {food && (
+        <p>
+          name: {food.name}
+          <br />
+          like: {food.like}
+          <br />
+          dislike: {food.dislike}
+        </p>
+      )}
+      <p>
+        <button type="button" onClick={() => onClick("potato")}>
+          potato
+        </button>{" "}
+        <button type="button" onClick={() => onClick("carrot")}>
+          carrot
+        </button>{" "}
+        <button type="button" onClick={() => onClick("tomato")}>
+          tomato
+        </button>
+      </p>
     </div>
-  )
+  );
 }

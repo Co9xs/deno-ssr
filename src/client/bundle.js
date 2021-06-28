@@ -1643,7 +1643,7 @@ var exports1 = {
     exports1.useState = useState;
     exports1.version = ReactVersion;
 })();
-const useState = exports1.useState;
+const useEffect = exports1.useEffect, useState = exports1.useState;
 var exports2 = {
 };
 (function() {
@@ -21179,22 +21179,27 @@ var exports4 = {
     exports4.unstable_renderSubtreeIntoContainer = renderSubtreeIntoContainer;
     exports4.version = ReactVersion;
 })();
-const App = ()=>{
-    const [count, setCount] = useState(0);
-    const countUp = ()=>{
-        setCount((currentCount)=>currentCount + 1
+function App() {
+    const [food, setFood] = useState(null);
+    const onClick = (name)=>{
+        fetch(`/api/${name}`).then((res)=>res.json()
+        ).then((data)=>setFood(data)
         );
     };
-    const countDown = ()=>{
-        setCount((currentCount)=>currentCount - 1
+    useEffect(()=>{
+        fetch("/api/potato").then((res)=>res.json()
+        ).then((data)=>setFood(data)
         );
-    };
-    return exports1.createElement("div", null, count, exports1.createElement("button", {
+    }, []);
+    return exports1.createElement("div", null, food && exports1.createElement("p", null, "name: ", food.name, exports1.createElement("br", null), "like: ", food.like, exports1.createElement("br", null), "dislike: ", food.dislike), exports1.createElement("p", null, exports1.createElement("button", {
         type: "button",
-        onClick: countUp
-    }, "count up"), exports1.createElement("button", {
+        onClick: ()=>onClick("potato")
+    }, "potato"), " ", exports1.createElement("button", {
         type: "button",
-        onClick: countDown
-    }, "count down"));
-};
+        onClick: ()=>onClick("carrot")
+    }, "carrot"), " ", exports1.createElement("button", {
+        type: "button",
+        onClick: ()=>onClick("tomato")
+    }, "tomato")));
+}
 exports4.hydrate(exports1.createElement(App, null), document.getElementById("app"));
