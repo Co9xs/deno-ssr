@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "https://jspm.dev/react@17.0.2";
+import React, { useState } from "https://jspm.dev/react@17.0.2";
 
 export function App({initialFood}) {
   const [food, setFood] = useState(initialFood);

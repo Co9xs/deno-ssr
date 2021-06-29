@@ -4,7 +4,7 @@ import ReactDOMServer from "https://jspm.dev/react-dom@17.0.2/server";
 
 import { App } from "../client/App.jsx";
 
-const BUNDLE_JS_FILE_URL = "/client/bundle.js";
+const BUNDLE_JS_FILE_URL = "/client/dist/bundle.js";
 const DUMMY_DB = new Map([
   ["potato", { name: "potato", like: 10, dislike: 0 }],
   ["carrot", { name: "carrot", like: 6, dislike: 4 }],
